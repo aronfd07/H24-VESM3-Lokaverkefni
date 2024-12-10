@@ -25,6 +25,24 @@ Aron F, Marinó F og Gunnar E
 ### Myndband af beinagrind
 [![Myndband af beinagrind](https://via.placeholder.com/1280x720.png)](https://github.com/aronfd07/H24-VESM3-Lokaverkefni/raw/refs/heads/main/20241210_161636.mp4)
 
-### Skjámynd af node-red dashboardinu
+### Skjámynd af node-red dashboardinu og flæðinu
 ![Skjámynd af node-red](https://raw.githubusercontent.com/aronfd07/H24-VESM3-Lokaverkefni/main/Screenshot%202024-12-10%20163013.png)
+
+### Linkur að json skrá fyrir nodered dashboardið.
+![Dashboard](https://github.com/user-attachments/assets/755ff5a8-b0e8-4be8-acb5-b7f9acf145af)
+
+[JSON skrá fyrir flow](https://github.com/aronfd07/H24-VESM3-Lokaverkefni/blob/main/Verkefni%205%20flowchart.json)
+
+
+### Ljósmyndir af mekaník, samsettningu á fígúru og leikmun
+
+![Beinagrind](https://raw.githubusercontent.com/aronfd07/H24-VESM3-Lokaverkefni/main/20241210_170206.jpg)
+
+![Vasaljós](https://raw.githubusercontent.com/aronfd07/H24-VESM3-Lokaverkefni/main/20241210_170216.jpg)
+
+![Bæði saman](https://raw.githubusercontent.com/aronfd07/H24-VESM3-Lokaverkefni/main/20241210_170225.jpg)
+
+
+
+
 
