@@ -23,3 +23,7 @@ Beinagrindin átti að láta ljósin sín blikka, hreyfa hendurnar sínar framm 
 
 ### Myndband af beinagrind
 [![Myndband af beinagrind](https://via.placeholder.com/1280x720.png)](https://github.com/aronfd07/H24-VESM3-Lokaverkefni/raw/refs/heads/main/20241210_161636.mp4)
+
+### Skjámynd af node-red dashboardinu
+![Skjámynd af node-red](https://raw.githubusercontent.com/aronfd07/H24-VESM3-Lokaverkefni/main/Screenshot%202024-12-10%20163013.png)
+
