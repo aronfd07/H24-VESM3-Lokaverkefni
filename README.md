@@ -14,3 +14,7 @@ Beinagrindin átti að láta ljósin sín blikka, hreyfa hendurnar sínar framm 
 - Mótorar fyrir hendurnar og búkinn
 - Rofi fyrir vasaljós
 - Mótor controller fyrir vasaljósið
+
+[Hérna er linkurinn fyrir kóðann fyrir beinagrindina](https://github.com/aronfd07/H24-VESM3-Lokaverkefni/blob/main/beinagrind.py)]]
+
+[Hérna er linkurinn fyrir kóðann fyrir vasaljósið](https://github.com/aronfd07/H24-VESM3-Lokaverkefni/blob/main/vasaljos.py)
