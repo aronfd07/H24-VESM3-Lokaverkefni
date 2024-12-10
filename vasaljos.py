@@ -60,7 +60,7 @@ def fekk_skilabod(topic, skilabod):
 MQTT_BROKER = "10.201.48.81" # eða broker.emqx.io (þarf að vera það sama á sendir og móttakara)
 CLIENT_ID = hexlify(unique_id())
 TOPIC_MOTOR = b"Vasaljos/#"
-
+TOPIC_SENA = "sena"
 mqtt_client = MQTTClient(CLIENT_ID, MQTT_BROKER, keepalive=60)
 
 async def mqtt_check():
@@ -80,77 +80,36 @@ async def mqtt_check():
 mqtt_client.set_callback(fekk_skilabod)
 mqtt_client.connect()
 mqtt_client.subscribe(TOPIC_MOTOR)
-
-sena_active = False
+mqtt_client.subscribe(TOPIC_SENA)
 
 def slokkva():
     for i in range(48):
         np[i] = (0, 0, 0)
     np.write()
 
-async def sena():
-    global sena_active
-    sena_active = True
-    
-    for i in range(8):
-        if i % 2 == 0:
-            for x in range(48):
-                if x % 2 == 0:
-                    np[x] = (255, 0, 0)
-                else:
-                    np[x] = (0, 0, 0)
-        else:
-            for x in range(48):
-               np[x] = (0, 0, 0)
-        np.write()
-        sleep_ms(150)
-    
-    for i in range(48):
-        if i % 2 == 0:
-            np[i] = (255, 0, 0)
-        else:
-            np[i] = (255, 255, 255)
-        np.write()
-        sleep_ms(10)
-        
-    for i in range(6):
-        for x in range(48):
-            if i % 2 == 0:
-                np[x] = (255, 255, 255)
-            else:
-                np[x] = (0, 0, 0)
-        np.write()
-        sleep_ms(100)
-        
-    for i in reversed(range(48)):
-        if 0 <= i <= 7:
-            np[i] = (255, 0, 0)
-        elif 8 <= i <= 23:
-            np[i] = (0, 255, 0)
-        elif 24 <= i <= 47:
-            np[i] = (0, 255, 0)
-        np.write()
-        sleep_ms(100)
 
 async def ljos_check():
     global motor_on, ljos_on
-    
+    ljos_on_sidast = 1
     while True:
-        ljos_on = bool(rofi.value())
-        
-        if motor_on:
+        ljos_on = rofi.value()
+        print(ljos_on)
+        if not ljos_on and ljos_on_sidast:
+            print("a")
+            mqtt_client.publish(TOPIC_SENA, "1")
+        if not ljos_on:
             ai1.value(1)
             ai2.value(0)
             pwmA.duty(1023)
         else:
             ai1.value(0)
             ai2.value(0)
-        
+        ljos_on_sidast = ljos_on
         for i in range(48):
-            if sena_active:
-                continue
             
-            if ljos_on:
+                
+            
+            if not ljos_on:
                 np[i] = ljos_litur_birtu
             else:
                 np[i] = (0, 0, 0)
@@ -162,7 +121,7 @@ async def main():
     asyncio.create_task(mqtt_check())
     asyncio.create_task(ljos_check())
     
-    await sena()
+    
     
     while True:
         await asyncio.sleep_ms(0)

@@ -1,6 +1,7 @@
 import network
 import time
 import machine
+from ir_rx.nec import NEC_8
 from umqtt.simple import MQTTClient
 import ujson
 import neopixel
@@ -9,6 +10,7 @@ import asyncio
 from servo import Servo
 from binascii import hexlify
 from lib.dfplayer import DFPlayer
+from time import sleep_ms
 
 servo_pin_v = Pin(4)  
 servo_pin_h = Pin(6)  
@@ -46,10 +48,10 @@ TOPIC_H_HENDI = "2807hendiH"
 TOPIC_AUGU = "Haus/lysa_augu"
 TOPIC_HLJOD = "Haus/hljod"
 TOPIC_BLIKK_HRADI = "Haus/augu_hradi"
-TOPIC_UPP_NIDUR = ""
-TOPIC_TIL_HLIDAR = ""
+TOPIC_UPP_NIDUR = "Haus/halslarett"
+TOPIC_TIL_HLIDAR = "Haus/halslodrett"
 TOPIC_KJALKI = "Haus/kjalki"
-
+TOPIC_SENA = "sena" 
 '''
 def hex_to_rgb(hex_color):
     hex_color = hex_color.lstrip('#')
@@ -60,6 +62,62 @@ def hex_to_rgb(hex_color):
     b = int(hex_color[4:6], 16) > 0
     return r, g, b
 '''
+
+scene_active = False
+#infared = False
+
+async def start_scene():
+    global scene_active
+    scene_active = True
+    print("Starting scene...")
+
+    try:
+        
+        
+        servo_h.write_angle(10)
+        sleep_ms(500)
+        servo_h.write_angle(180)
+        print("a")
+        sleep_ms(500)
+        servo_v.write_angle(10)
+        sleep_ms(500)
+        servo_v.write_angle(180)
+        print("a")
+        sleep_ms(500)
+        servo_upp_nidur.write_angle(70)
+        sleep_ms(500)
+        servo_upp_nidur.write_angle(100)
+        sleep_ms(500)
+        servo_til_hlidar.write_angle(0)
+        sleep_ms(500)
+        servo_til_hlidar.write_angle(100)
+        sleep_ms(500)
+        servo_kjalki.write_angle(30)
+        sleep_ms(500)
+        servo_kjalki.write_angle(60)
+        sleep_ms(1000)
+    except Exception as e:
+        print("Error during scene:", e)
+
+    scene_active = False
+
+
+
+def red_callback(data, addr, ctrl):
+    global scene_active
+    #global infared
+    if scene_active:
+        print("Scene already active.")
+        return
+
+    if data >= 0:
+        #infared = True
+        print("Data: {:02x}, address: {:04x}".format(data, addr))
+        asyncio.create_task(start_scene())
+
+red = NEC_8(Pin(19, Pin.IN), red_callback)
+
+
 
 def set_rgb_green(rgb_pins_1, rgb_pins_2):
     rgb_pins_1["red"].value(0)
@@ -132,9 +190,14 @@ async def stop_music():
 def mqtt_callback(topic, msg):
     global blink_task
     global rgb_on
+    global scene_active
+
+    if scene_active:
+        print("Kveikt er á senu.")
+        return
     topic = topic.decode("utf-8")
     msg = msg.decode("utf-8")
- 
+    
     if topic == TOPIC_V_HENDI or topic == TOPIC_H_HENDI:
         try:
             msg = int(msg)
@@ -205,8 +268,12 @@ def mqtt_callback(topic, msg):
             asyncio.create_task(play_music())
         elif msg == "false":
             asyncio.create_task(stop_music())
+    elif topic == TOPIC_SENA:
+        if msg == "1" and not scene_active:
+            asyncio.create_task(start_scene())
     
-
+        
+        
     
 def connect_mqtt():
     client = MQTTClient(MQTT_CLIENT_ID, MQTT_BROKER)
@@ -218,12 +285,16 @@ def connect_mqtt():
     client.subscribe(TOPIC_BLIKK_HRADI)
     client.subscribe(TOPIC_HLJOD)
     client.subscribe(TOPIC_KJALKI)
+    client.subscribe(TOPIC_TIL_HLIDAR)
+    client.subscribe(TOPIC_UPP_NIDUR)
+    client.subscribe(TOPIC_SENA)
     print("Tengdur við MQTT broker:", MQTT_BROKER)
     return client
 
 async def mqtt_loop(client):
     while True:
         client.check_msg()
+        #mqtt_client.publish()
         await asyncio.sleep(0.1)
 
 async def main():
