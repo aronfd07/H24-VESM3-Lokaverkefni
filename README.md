@@ -6,6 +6,9 @@ Við ákváðum að gera vasaljós sem myndi láta grindina taka eftir því þe
 því ert beint að sér og síðan láta beinagrindina bregða viðkomandi sem heldur á vasaljósinu
 Beinagrindin átti að láta ljósin sín blikka, hreyfa hendurnar sínar framm og til baka, opna og loka munninum og spila hrollvekjandi hljóð.
 
+### Höfundar
+Aron F, Marinó F og Gunnar E
+
 ### Íhluta listi
 - Infared móttakari
 - Infared sendir
