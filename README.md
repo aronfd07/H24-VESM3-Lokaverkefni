@@ -42,6 +42,8 @@ Aron F, Marinó F og Gunnar E
 
 ![Bæði saman](https://raw.githubusercontent.com/aronfd07/H24-VESM3-Lokaverkefni/main/20241210_170225.jpg)
 
+### Flæðirit fyrir scenuna
+![Mynd af flæðiritinu](https://github.com/user-attachments/assets/cc55eab2-01ef-41da-8c4f-4c35cb8bfa05)
 
 
 
