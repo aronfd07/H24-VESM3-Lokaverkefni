@@ -45,6 +45,7 @@ Aron F, Marinó F og Gunnar E
 ### Flæðirit fyrir scenuna
 ![Mynd af flæðiritinu](https://github.com/user-attachments/assets/cc55eab2-01ef-41da-8c4f-4c35cb8bfa05)
 
-
+### Yfirlit yfir tengingar
+![Yfirlit yfir tengingar](https://github.com/user-attachments/assets/a174725e-97a1-4df5-a28e-24b55844e52d)
 
 
